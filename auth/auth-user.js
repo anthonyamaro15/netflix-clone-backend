@@ -22,8 +22,8 @@ route.post("/register", (req, res) => {
         .then((user) => {
           res.status(201).json(user);
         })
-        .catch(({ error, message }) => {
-          res.status(400).json({ error, message });
+        .catch((err) => {
+          res.status(400).json({ message: "invalid credentials!" });
         });
     }
   });
@@ -45,8 +45,8 @@ route.post("/login", (req, res) => {
         res.status(401).json({ message: "Invalid email or password" });
       }
     })
-    .catch(({ error, message }) => {
-      res.status(500).json({ error, message });
+    .catch((err) => {
+      res.status(500).json({ message: "invalid credentials" });
     });
 });
 

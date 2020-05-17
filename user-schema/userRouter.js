@@ -9,8 +9,8 @@ route.get("/", (req, res) => {
     .then((users) => {
       res.status(200).json(users);
     })
-    .catch(({ error, message }) => {
-      res.status(400).json({ error, message });
+    .catch((err) => {
+      res.status(404).json({ message: "something went wrong" });
     });
 });
 
@@ -20,8 +20,8 @@ route.get("/:id/favorites", (req, res) => {
     .then((movies) => {
       res.status(200).json(movies);
     })
-    .catch(({ error, message }) => {
-      res.status(404).json({ error, message });
+    .catch((err) => {
+      res.status(404).json({ message: "something went wrong" });
     });
 });
 
