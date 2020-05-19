@@ -1,17 +1,16 @@
 const db = require("../data/db-config");
 
 function add(user) {
-  return db("users").insert(user);
+  return db("users").insert(user, "id");
 }
 
-async function addMovie(id, body) {
-  const [addedId] = await db("favorite").insert(body, "id");
-  console.log(addedId);
-
-  return db("user_movie as um").where({
-    "um.movie_id": addedId,
-    "um.user_id": id,
-  });
+async function addMovie(user_id, body) {
+  //   const [id] = await db("favorite").insert(body, "id");
+  //   let movie_id = id;
+  //   const movie = await "user_movie, u".insert(movie_id, "movie_id");
+  //   return db("user_movie as um")
+  //     .insert(user_id, "user_id")
+  //     .join("favorite as f", "f.f_id", movie.movie_id);
 }
 
 function findBy(email) {
