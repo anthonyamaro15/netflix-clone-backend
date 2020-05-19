@@ -24,12 +24,14 @@ exports.up = function (knex) {
       table
         .integer("movie_id")
         .unsigned()
+        .notNullable()
         .references("favorite.f_id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
       table
         .integer("user_id")
         .unsigned()
+        .notNullable()
         .references("users.id")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
