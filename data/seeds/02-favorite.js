@@ -3,7 +3,7 @@ exports.seed = function (knex) {
   return knex("favorite").insert([
     {
       backdrop_path: "this is test one",
-      id: 122,
+      movie_id: 122,
       original_language: "es",
       original_title: "title movie",
       popularity: 12.2,
@@ -12,10 +12,12 @@ exports.seed = function (knex) {
       title: "title for movie one",
       vote_average: 1.2,
       vote_count: 2323,
+      user_id: 1,
+      release_date: "testing hahahah",
     },
     {
       backdrop_path: "this is test 2",
-      id: 1232,
+      movie_id: 1232,
       original_language: "es",
       original_title: "avengeers",
       popularity: 12.22,
@@ -24,10 +26,12 @@ exports.seed = function (knex) {
       title: "title for movie 2",
       vote_average: 1.23,
       vote_count: 2323,
+      user_id: 1,
+      release_date: "testing hahahah",
     },
     {
       backdrop_path: "this is test 3",
-      id: 122,
+      movie_id: 122,
       original_language: "es",
       original_title: "title hulk",
       popularity: 12.2,
@@ -36,10 +40,12 @@ exports.seed = function (knex) {
       title: "title for movie 3",
       vote_average: 1.2,
       vote_count: 2323,
+      user_id: 1,
+      release_date: "testing hahahah",
     },
     {
       backdrop_path: "this is test 4",
-      id: 122,
+      movie_id: 122,
       original_language: "es",
       original_title: "title spider man",
       popularity: 12.2,
@@ -48,6 +54,8 @@ exports.seed = function (knex) {
       title: "title for movie 4",
       vote_average: 1.2,
       vote_count: 2323,
+      user_id: 1,
+      release_date: "testing hahahah",
     },
   ]);
 };
