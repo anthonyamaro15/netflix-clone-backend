@@ -4,8 +4,6 @@ const axios = require("axios");
 const redis = require("redis");
 const Favorite = require("../user-schema/user-model");
 
-// const REDIS_PORT = process.env.REDIS_PORT || 6379;
-
 const client = redis.createClient(process.env.REDIS_URL);
 
 const route = express.Router();
@@ -25,7 +23,7 @@ route.get("/browse/:page", (req, res) => {
           `${process.env.URL}/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
         )
         .then((response) => {
-          let results = response.data.results;
+          let results = addNewProperties(response.data.results, "browse");
           client.setex("browse", 120, JSON.stringify(results));
           res.status(200).json(results);
         })
@@ -51,7 +49,7 @@ route.get("/tvpopular/:page", (req, res) => {
           `${process.env.URL}/tv/popular?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
         )
         .then((response) => {
-          let results = response.data.results;
+          let results = addNewProperties(response.data.results, "tvpopular");
           client.setex("tvpopular", 120, JSON.stringify(results));
 
           res.status(200).json(response.data.results);
@@ -78,7 +76,7 @@ route.get("/latestrated/:page", (req, res) => {
           `${process.env.URL}/movie/top_rated?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
         )
         .then((response) => {
-          let results = response.data.results;
+          let results = addNewProperties(response.data.results, "latestrated");
           client.setex("latestrated", 120, JSON.stringify(results));
 
           res.status(200).json(response.data.results);
@@ -105,7 +103,7 @@ route.get("/playingmovie/:page", (req, res) => {
           `${process.env.URL}/movie/now_playing?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
         )
         .then((response) => {
-          let results = response.data.results;
+          let results = addNewProperties(response.data.results, "playingmovie");
           client.setex("playingmovie", 120, JSON.stringify(results));
 
           res.status(200).json(response.data.results);
@@ -156,5 +154,16 @@ route.delete("/remove/:user_id/:movie_id", (req, res) => {
       res.status(500).json({ errorMessage: err.message });
     });
 });
+
+function addNewProperties(arr, category) {
+  const newArr = arr.map((movie) => {
+    return {
+      ...movie,
+      joined: false,
+      category: category,
+    };
+  });
+  return newArr;
+}
 
 module.exports = route;
