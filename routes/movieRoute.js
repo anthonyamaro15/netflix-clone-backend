@@ -4,9 +4,9 @@ const axios = require("axios");
 const redis = require("redis");
 const Favorite = require("../user-schema/user-model");
 
-const REDIS_PORT = process.env.REDIS_PORT || 6379;
+// const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-const client = redis.createClient(REDIS_PORT, process.env.REDIS_URL);
+const client = redis.createClient(process.env.REDIS_URL);
 
 const route = express.Router();
 
