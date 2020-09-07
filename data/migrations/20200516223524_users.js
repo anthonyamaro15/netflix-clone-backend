@@ -13,7 +13,7 @@ exports.up = function (knex) {
       table.string("original_language", 255);
       table.string("original_title", 255);
       table.float("popularity");
-      table.string("overview", 255);
+      table.text("overview");
       table.string("poster_path", 255);
       table.string("title", 255);
       table.float("vote_average");
