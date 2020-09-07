@@ -43,7 +43,9 @@ async function getFavMovies(id) {
       "f.vote_average",
       "f.vote_count",
       "f.release_date",
-      "f.user_id"
+      "f.user_id",
+      "f.joined",
+      "f.category"
     );
 }
 
