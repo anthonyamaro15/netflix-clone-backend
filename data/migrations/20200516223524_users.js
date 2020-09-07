@@ -16,7 +16,7 @@ exports.up = function (knex) {
       table.string("overview", 255);
       table.string("poster_path", 255);
       table.string("title", 255);
-      table.integer("vote_average");
+      table.float("vote_average");
       table.float("vote_count");
       table.boolean("joined");
       table.string("category", 255);
