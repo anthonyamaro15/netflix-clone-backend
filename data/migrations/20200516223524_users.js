@@ -18,14 +18,12 @@ exports.up = function (knex) {
       table.string("title", 255);
       table.integer("vote_average");
       table.float("vote_count");
+      table.boolean("joined");
+      table.string("category", 255);
       table.string("release_date", 255);
-      table
-        .integer("user_id")
-        .unsigned()
-        .notNullable()
-        .references("users.id")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+      table.integer("user_id").unsigned().notNullable().references("users.id");
+      //   .onUpdate("CASCADE")
+      //   .onDelete("CASCADE");
     });
 };
 
