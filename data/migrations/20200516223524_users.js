@@ -25,8 +25,6 @@ exports.up = function (knex) {
       table.string("category", 255);
       table.string("release_date", 255);
       table.integer("user_id").unsigned().notNullable().references("users.id");
-      //   .onUpdate("CASCADE")
-      //   .onDelete("CASCADE");
     });
 };
 
