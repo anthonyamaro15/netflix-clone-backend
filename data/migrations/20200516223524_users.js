@@ -14,6 +14,7 @@ exports.up = function (knex) {
       table.string("original_title", 255);
       table.float("popularity");
       table.text("overview");
+      table.string("first_air_date", 255);
       table.string("poster_path", 255);
       table.string("title", 255);
       table.float("vote_average");
