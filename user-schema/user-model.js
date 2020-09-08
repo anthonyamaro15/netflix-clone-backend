@@ -52,7 +52,7 @@ async function getFavMovies(id) {
 async function removeFav(user_id, movie_id) {
   return db("favorite as f")
     .where({ "f.user_id": user_id })
-    .where({ "f.id": movie_id })
+    .where({ "f.movie_id": movie_id })
     .del();
 }
 
