@@ -45,7 +45,9 @@ async function getFavMovies(id) {
       "f.release_date",
       "f.user_id",
       "f.joined",
-      "f.category"
+      "f.category",
+      "f.first_air_date",
+      "f.name"
     );
 }
 
