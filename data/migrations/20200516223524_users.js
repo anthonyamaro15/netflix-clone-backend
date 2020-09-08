@@ -20,6 +20,7 @@ exports.up = function (knex) {
       table.float("vote_average");
       table.float("vote_count");
       table.boolean("joined");
+      table.string("name", 255);
       table.string("category", 255);
       table.string("release_date", 255);
       table.integer("user_id").unsigned().notNullable().references("users.id");
