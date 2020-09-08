@@ -8,29 +8,13 @@ const client = redis.createClient(process.env.REDIS_URL);
 
 const route = express.Router();
 
-route.get("/search/:search", (req, res) => {
-  const { search } = req.params;
-  console.log("what is search here ", search);
-
-  axios
-    .get(
-      `${process.env.URL}/search/movie?api_key=${process.env.API_KEY}&language=en-US&query=${search}&page=1&include_adult=false`
-    )
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(500).json({ errorMessage: err.message });
-    });
-});
-
 route.get("/browse/:page", (req, res) => {
   const { page } = req.params;
   client.get("browse", (err, data) => {
     if (err) {
       res.status(500).json({ errorMessage: "there was an error", error: err });
     }
-    if (data !== null) {
+    if (data !== null && Number(page) === 1) {
       let results = JSON.parse(data);
       res.status(200).json(results);
     } else {
@@ -56,7 +40,7 @@ route.get("/tvpopular/:page", (req, res) => {
     if (err) {
       res.status(500).json({ errorMessage: "there was an error", error: err });
     }
-    if (data !== null) {
+    if (data !== null && Number(page) === 1) {
       let results = JSON.parse(data);
       res.status(200).json(results);
     } else {
@@ -83,7 +67,7 @@ route.get("/latestrated/:page", (req, res) => {
     if (err) {
       res.status(500).json({ errorMessage: "there was an error", error: err });
     }
-    if (data !== null) {
+    if (data !== null && Number(page) === 1) {
       let results = JSON.parse(data);
       res.status(200).json(results);
     } else {
@@ -110,7 +94,7 @@ route.get("/playingmovie/:page", (req, res) => {
     if (err) {
       res.status(500).json({ errorMessage: "there was an error", error: err });
     }
-    if (data !== null) {
+    if (data !== null && Number(page) === 1) {
       let results = JSON.parse(data);
       res.status(200).json(results);
     } else {

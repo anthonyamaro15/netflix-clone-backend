@@ -12,6 +12,7 @@ exports.up = function (knex) {
       table.integer("movie_id").notNullable();
       table.string("original_language", 255);
       table.string("original_title", 255);
+      table.string("original_name", 255);
       table.float("popularity");
       table.text("overview");
       table.string("first_air_date", 255);
