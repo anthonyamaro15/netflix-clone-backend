@@ -16,6 +16,8 @@ exports.seed = function (knex) {
       category: "browse",
       user_id: 1,
       release_date: "testing hahahah",
+      first_air_date: "",
+      name: "",
     },
     {
       backdrop_path: "this is test 2",
@@ -32,6 +34,8 @@ exports.seed = function (knex) {
       vote_count: 2323,
       user_id: 1,
       release_date: "testing hahahah",
+      first_air_date: "",
+      name: "",
     },
     {
       backdrop_path: "this is test 3",
@@ -47,6 +51,8 @@ exports.seed = function (knex) {
       joined: false,
       category: "browse",
       user_id: 1,
+      first_air_date: "",
+      name: "",
       release_date: "testing hahahah",
     },
     {
@@ -64,6 +70,8 @@ exports.seed = function (knex) {
       category: "browse",
       user_id: 1,
       release_date: "testing hahahah",
+      first_air_date: "",
+      name: "",
     },
   ]);
 };
