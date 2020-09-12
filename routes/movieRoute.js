@@ -166,4 +166,10 @@ function addNewProperties(arr, category) {
   return newArr;
 }
 
+route.get("/users", (req, res) => {
+  Favorite.find()
+    .then((users) => res.status(200).json(users))
+    .catch((err) => res.status(500).json(err));
+});
+
 module.exports = route;
