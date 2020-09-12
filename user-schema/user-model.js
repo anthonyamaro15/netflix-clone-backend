@@ -13,7 +13,7 @@ function findById(id) {
 }
 
 function find() {
-  return db("users as u").select(".u.email");
+  return db("users as u").select("u.email");
 }
 
 // favorites
