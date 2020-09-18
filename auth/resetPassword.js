@@ -12,7 +12,6 @@ route.patch("/forgotpassword", (req, res) => {
 
   Admin.findBy({ email })
     .then((admin) => {
-      console.log("what is this? ", admin);
       if (!admin) {
         res.status(404).json({ errorMessage: "Invalid email" });
       } else {
