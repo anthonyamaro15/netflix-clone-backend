@@ -5,6 +5,7 @@ exports.up = function (knex) {
       table.string("email", 128).notNullable().unique();
       table.string("username", 128).notNullable().unique();
       table.string("password", 128).notNullable();
+      table.string("reset_link", 255);
     })
     .createTable("favorite", (table) => {
       table.increments();

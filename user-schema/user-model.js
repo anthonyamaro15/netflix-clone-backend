@@ -16,6 +16,10 @@ function find() {
   return db("users as u").select("u.email");
 }
 
+function update(id, changes) {
+  return db("users").where({ id }).update(changes, "id");
+}
+
 // favorites
 async function addMovie(movie) {
   let [movie_id] = await db("favorite").insert(movie, "id");
@@ -65,6 +69,6 @@ module.exports = {
   find,
   getFavMovies,
   findById,
-
+  update,
   removeFav,
 };
