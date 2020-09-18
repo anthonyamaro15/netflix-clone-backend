@@ -11,12 +11,16 @@ const route = express.Router();
 route.post("/register", (req, res) => {
   const userInfo = req.body;
   const { email } = req.body;
+  console.log("user info ", userInfo);
 
   User.findBy({ email }).then((user) => {
     if (user) {
       res.status(500).json({ message: "Email already taken" });
     } else {
-      const hash = bcrypt.hashSync(userInfo.password, 8);
+      const hash = bcrypt.hashSync(
+        userInfo.password,
+        Number(process.env.ROUNDS)
+      );
       userInfo.password = hash;
       User.add(userInfo)
         .then((user) => {
