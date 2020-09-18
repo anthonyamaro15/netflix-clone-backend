@@ -11,7 +11,6 @@ const route = express.Router();
 route.post("/register", (req, res) => {
   const userInfo = req.body;
   const { email } = req.body;
-  console.log("user info ", userInfo);
 
   User.findBy({ email }).then((user) => {
     if (user) {
