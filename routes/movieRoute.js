@@ -3,10 +3,16 @@ const express = require("express");
 const axios = require("axios");
 const redis = require("redis");
 const Favorite = require("../user-schema/user-model");
+const { apiKey } = require('../envVariables');
 
 const client = redis.createClient(process.env.REDIS_URL);
 
 const route = express.Router();
+
+route.get('/', (req, res) => {
+   res.status(200).json({ message: "server running."});
+});
+
 
 route.get("/browse/:page", (req, res) => {
   const { page } = req.params;
@@ -20,7 +26,7 @@ route.get("/browse/:page", (req, res) => {
     } else {
       axios
         .get(
-          `${process.env.URL}/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+          `${process.env.URL}/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`
         )
         .then((response) => {
           let results = addNewProperties(response.data.results, "browse");
@@ -46,7 +52,7 @@ route.get("/tvpopular/:page", (req, res) => {
     } else {
       axios
         .get(
-          `${process.env.URL}/tv/popular?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+          `${process.env.URL}/tv/popular?api_key=${apiKey}&language=en-US&page=${page}`
         )
         .then((response) => {
           let results = addNewProperties(response.data.results, "tvpopular");
@@ -73,7 +79,7 @@ route.get("/latestrated/:page", (req, res) => {
     } else {
       axios
         .get(
-          `${process.env.URL}/movie/top_rated?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+          `${process.env.URL}/movie/top_rated?api_key=${apiKey}&language=en-US&page=${page}`
         )
         .then((response) => {
           let results = addNewProperties(response.data.results, "latestrated");
@@ -100,7 +106,7 @@ route.get("/playingmovie/:page", (req, res) => {
     } else {
       axios
         .get(
-          `${process.env.URL}/movie/now_playing?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+          `${process.env.URL}/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`
         )
         .then((response) => {
           let results = addNewProperties(response.data.results, "playingmovie");

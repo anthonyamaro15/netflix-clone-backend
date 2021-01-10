@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/secret");
+const { jwtSecret, rounds } = require('../envVariables');
 
 const User = require("../user-schema/user-model");
 
@@ -16,10 +16,7 @@ route.post("/register", (req, res) => {
     if (user) {
       res.status(500).json({ message: "Email already taken" });
     } else {
-      const hash = bcrypt.hashSync(
-        userInfo.password,
-        Number(process.env.ROUNDS)
-      );
+      const hash = bcrypt.hashSync(userInfo.password, rounds );
       userInfo.password = hash;
       User.add(userInfo)
         .then((user) => {
