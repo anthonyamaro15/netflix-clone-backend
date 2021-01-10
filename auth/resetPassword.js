@@ -1,11 +1,15 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const Admin = require("../user-schema/user-model");
-const resetTemplate = require("../templates/resetTemplate");
+const { sendEmail } = require('../emailHelperFunctions');
+const { 
+   resetPasswordSecret, 
+   rounds 
+} = require('../envVariables');
 
 const route = express.Router();
+
 
 route.patch("/forgotpassword", (req, res) => {
   const { email } = req.body;
@@ -15,37 +19,20 @@ route.patch("/forgotpassword", (req, res) => {
       if (!admin) {
         res.status(404).json({ errorMessage: "Invalid email" });
       } else {
-        const token = jwt.sign({ admin: admin.email }, process.env.RESET_PASS, {
+        const token = jwt.sign({ admin: admin.email }, resetPasswordSecret, {
           expiresIn: "10m",
         });
 
         const id = admin.id;
 
-        Admin.update(id, { reset_link: token }).then((adm) => {
-          async function main() {
-            // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-              service: "Gmail",
-              auth: {
-                user: process.env.GMAIL_USER, // generated ethereal user
-                pass: process.env.GMAIL_PASS, // generated ethereal password
-              },
-            });
-
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-              from: `TMovies <${process.env.GMAIL_USER}>`, // sender address
-              to: email, // list of receivers
-              subject: "Reset Password", // Subject line
-              html: resetTemplate(token, admin), // html body
-            });
-
-            console.log("Message sent: %s", info.messageId);
-            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-          }
-          main();
-          res.status(200).json({ message: "Reset link has been sent." });
-        });
+        try {
+         Admin.update(id, { reset_link: token }).then((adm) => {
+            sendEmail({ email, token, admin });
+            res.status(200).json({ message: "Reset link has been sent." });
+         });           
+        } catch (error) {
+           res.status(500).json({ errorMessage: error.message });
+        }
       }
     })
     .catch((err) => {
@@ -61,7 +48,7 @@ route.patch("/resetpassword/:token", (req, res) => {
   let credentials = req.body;
 
   if (reset_link) {
-    jwt.verify(reset_link, process.env.RESET_PASS, (error, decodedToken) => {
+    jwt.verify(reset_link, resetPasswordSecret, (error, decodedToken) => {
       if (error) {
         res
           .status(401)
@@ -78,10 +65,7 @@ route.patch("/resetpassword/:token", (req, res) => {
           .json({ errorMessage: "Admin with this token does not exist." });
       }
 
-      const hash = bcrypt.hashSync(
-        credentials.password,
-        Number(process.env.ROUNDS)
-      );
+      const hash = bcrypt.hashSync(credentials.password, rounds);
       credentials.password = hash;
 
       const id = link.id;
